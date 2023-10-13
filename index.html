@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <p>Enter your text or Url</p>
+      <input type="text" placeholder="Text or URL" id="qrText" />
+      <div id="imgBox">
+        <img src="" id="qrImage" />
+      </div>
+      <button onclick="generateQr()" id="btn">Generate QR Code</button>
+    </div>
+
+    <script>
+      let imgBox = document.getElementById("imgBox");
+      let qrImage = document.getElementById("qrImage");
+      let qrText = document.getElementById("qrText");
+      let btn = document.getElementById("btn");
+
+      //Below code will call addTask function whenever we click enter, when we are inside the input-box
+      qrText.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          generateQr();
+        }
+      });
+
+      function generateQr() {
+        if (qrText.value.length > 0) {
+          qrImage.src =
+            "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" +
+            qrText.value;
+          imgBox.classList.add("show-img");
+        } else {
+          qrText.style.border = "1px solid #ea4949";
+          qrText.classList.add("error");
+          btn.classList.add("error");
+          btn.style.background = "#ea4949";
+          qrText.placeholder = "Enter Some Text To Generate QR";
+
+          setTimeout(() => {
+            qrText.style.border = "1px solid #494eea";
+            qrText.classList.remove("error");
+            btn.classList.remove("error");
+            btn.style.background = "#494eea";
+            qrText.placeholder = "Text or URL";
+          }, 1000);
+        }
+      }
+    </script>
+  </body>
+</html>
